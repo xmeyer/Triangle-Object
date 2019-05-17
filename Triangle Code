@@ -1,0 +1,81 @@
+# Triangle: <Triangle(A(5.000000, 30.000000), B(27.000000, 43.000000), C(18.000000, 8.000000))>
+
+import math
+
+class Triangle():
+    def __init__(self, x1, y1, x2, y2, x3, y3):
+        self.Ax = x1
+        self.Ay = y1
+        self.Bx = x2
+        self.By = y2
+        self.Cx = x3
+        self.Cy = y3
+        self.a = math.sqrt((self.Cx - self.Bx) ** 2 + (self.Cy - self.By) ** 2)# distance between BC
+        self.b = math.sqrt((self.Cx - self.Ax) ** 2 + (self.Cy - self.Ay) ** 2)
+        self.c = math.sqrt((self.Ax - self.Bx) ** 2 + (self.Ay - self.By) ** 2)
+
+    def __str__(self):
+        return "<Triangle(A(%f, %f), B(%f, %f), C(%f, %f))>" % (self.Ax, self.Ay, self.Bx, self.By, self.Cx, self.Cy)     # (self.A, self.B, self.C)
+
+    def area(self):
+        sp = (self.a + self.b + self.c) / 2 # semi-perimeter
+        area = math.sqrt(sp * (sp - self.a) * (sp - self.b) * (sp - self.c))
+        return area
+
+    def perimeter(self):
+        return self.a + self.b + self.c
+
+    def LongestSide(self):
+        if self.c > (self.a and self.b):
+            return self.c
+        elif self.b > (self.a and self.c):
+            return self.b
+        elif self.a > (self.c and self.b):
+            return self.a
+        elif self.a == self.c:
+            return self.a, self.c
+        elif self.b == self.c:
+            return self.b, self.c
+        elif self.a == self.b:
+            return self.a, self.b
+        else:
+            return self.a, self.b, self.c
+
+    def ClassifyBySideLength(self):
+        if self.a == self.b == self.c:
+            return 'Equilateral'
+        elif self.a == self.c:
+            return 'Isosceles'
+        elif self.b == self.c:
+            return 'Isosceles'
+        elif self.a == self.b:
+            return 'Isosceles'
+        else:
+            return 'Scalene'
+
+    def IsRightTriangle(self):
+        if self.c ** 2 == (self.a ** 2 + self.b ** 2):
+            return True
+        elif self.b ** 2 == (self.a ** 2 + self.c ** 2):
+            return True
+        elif self.a ** 2 == (self.b ** 2 + self.c ** 2):
+            return True
+        else:
+            return False
+
+    def Centroid(self):
+        OriginX = (self.Ax + self.Bx + self.Cx) / 3
+        OriginY = (self.Ay + self.By + self.Cy) / 3
+        return OriginX, OriginY
+
+def main():
+    T = Triangle(5, 30, 27, 43, 18, 8)
+    print("Triangle:", T)
+    print("Area:", T.area())
+    print("Perimeter:", T.perimeter())
+    print("Longest Side:", T.LongestSide())
+    print("Classify By Side Length:", T.ClassifyBySideLength())
+    print("Is Right Triangle:", T.IsRightTriangle())
+    print("Centroid:", T.Centroid())
+
+main()
